@@ -82,8 +82,6 @@ entries: {}
 | `/aoli reload` | | Reload config.yml |
 | `/aoli list` | | Show all entries |
 
-All commands are also available via the full alias `/adminonlyloginip`.
-
 ---
 
 ## How it works

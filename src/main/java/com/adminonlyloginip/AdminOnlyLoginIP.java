@@ -18,7 +18,7 @@ public class AdminOnlyLoginIP extends JavaPlugin {
         reloadConfig();
         store = new AdminStore(this);
         loadDataFile();
-        getCommand("adminonlyloginip").setExecutor(new AdminCommand(this));
+        getCommand("aoli").setExecutor(new AdminCommand(this));
         getServer().getPluginManager().registerEvents(new LoginListener(this), this);
         getLogger().info("AdminOnlyLoginIP enabled - " + store.getAll().size() + " entries loaded");
     }

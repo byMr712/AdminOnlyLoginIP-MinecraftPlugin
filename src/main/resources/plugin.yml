@@ -5,10 +5,9 @@ api-version: '1.20'
 description: Restricts login to saved UUID+IP pairs
 
 commands:
-  adminonlyloginip:
+  aoli:
     description: Add or delete admin IP entry
-    usage: /AdminOnlyLoginIP add|delete <nickname>
-    aliases: [aoli]
+    usage: /aoli add|delete <nickname>
 
 permissions:
   adminonlyloginip.admin:
