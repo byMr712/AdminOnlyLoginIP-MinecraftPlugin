@@ -1,13 +1,8 @@
 package com.adminonlyloginip;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.title.Title;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-
-import java.net.InetSocketAddress;
-import java.time.Duration;
 
 public class LoginListener implements Listener {
 
@@ -19,29 +14,27 @@ public class LoginListener implements Listener {
 
     @EventHandler
     public void onPreLogin(AsyncPlayerPreLoginEvent event) {
+        if (!plugin.isCheckEnabled()) return;
+
         AdminStore.StoredEntry entry = plugin.getStore().getByUuid(event.getUniqueId());
         if (entry == null) return;
 
-        InetSocketAddress addr = event.getAddress();
-        if (addr == null || addr.getAddress() == null) {
-            kick(event, "Cannot determine your IP.");
+        java.net.InetAddress addr = event.getAddress();
+        if (addr == null) {
+            kick(event);
             return;
         }
 
-        String playerIp = addr.getAddress().getHostAddress();
+        String playerIp = addr.getHostAddress();
         if (!playerIp.equals(entry.ip())) {
-            kick(event, "IP mismatch");
+            plugin.getLogger().warning("KICKED " + event.getName() + " | stored IP: " + entry.ip() + " | connecting IP: " + playerIp);
+            kick(event);
         }
     }
 
-    private void kick(AsyncPlayerPreLoginEvent event, String reason) {
+    private void kick(AsyncPlayerPreLoginEvent event) {
+        String msg = plugin.getConfig().getString("kick-message", "Доступ запрещён");
         event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-        event.setKickMessage("Access denied");
-        Title title = Title.title(
-                Component.text("No no no mister fish"),
-                Component.empty(),
-                Title.Times.times(Duration.ofMillis(500), Duration.ofSeconds(5), Duration.ofMillis(500))
-        );
-        event.kickMessage(Component.text("No no no mister fish"));
+        event.setKickMessage(msg);
     }
 }

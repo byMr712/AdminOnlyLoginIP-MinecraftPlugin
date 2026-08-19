@@ -1,3 +1,8 @@
-# AdminOnlyLoginIP - Saved entries
-# Each entry: uuid, nickname, ip
-entries: []
+# AdminOnlyLoginIP
+# Ограничение входа по IP для сохранённых игроков
+
+# Включить проверку IP (true/false)
+enabled: true
+
+# Сообщение при кике за несовпадение IP
+kick-message: Доступ запрещён
