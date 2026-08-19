@@ -1,14 +1,15 @@
 # AdminOnlyLoginIP v1.0
 
-Minecraft plugin that binds player login to a specific IP address. Associates a player's UUID with an IP — if they try to log in from a different IP, they get kicked. Works with `online-mode: false`.
+> **Язык:** English · [Russian](readme.md)
+
+Minecraft login-to-IP address binding plugin. Binds a player's UUID to a specific IP address; logging in from a different IP causes the player to be kicked. Works with 'online-mode: false'.
 
 ---
 
 ## Requirements
 
-- Paper 1.20+ (or compatible Spigot/Paper fork)
+- Paper 1.20+ (or a compatible Spigot/Paper/Purpur)
 - Java 17+
-- `online-mode: false` in `server.properties`
 
 ---
 
@@ -16,39 +17,36 @@ Minecraft plugin that binds player login to a specific IP address. Associates a 
 
 1. Copy `AdminOnlyLoginIP-1.0.jar` to the `plugins/` folder
 2. Restart the server
-3. Configure `plugins/AdminOnlyLoginIP/config.yml` if needed
+3. Configure `plugins/AdminOnlyLoginIP/config.yml` if necessary
+
+---
+
+## How it works
+
+1. The player executes `/aoli add <nickname>` — the plugin saves their UUID, nickname, and current IP in `data.yml`
+2. Each time the plugin logs in, it checks: if the player's UUID is in the database, their IP must match the saved one.
+3. If the IP doesn't match, the player is kicked.
+4. This check can be disabled with the command `/aoli off` (useful when changing IP)
 
 ---
 
 ## Quick Start
 
-### 1. Add a player
+### 1. Add Player
 
-Stand in-game and run:
+Join the game and run:
 
 ```
 /aoli add <nickname>
 ```
 
-This saves your UUID, the specified nickname, and your current IP address.
+This will save your UUID, the specified nickname, and your current IP address.
 
 ### 2. Try logging in from a different IP
 
-If the IP doesn't match the stored one — you get kicked with the message from config.
+If the IP doesn't match the saved one, you will be kicked with the message from the config.
 
-### 3. Management
-
-```
-/aoli list           — show all entries
-/aoli delete <nick>  — remove an entry
-/aoli on             — enable IP check
-/aoli off            — disable IP check
-/aoli reload         — reload config
-```
-
----
-
-## Configuration
+## Settings
 
 ### config.yml
 
@@ -56,27 +54,23 @@ If the IP doesn't match the stored one — you get kicked with the message from 
 # Enable IP check (true/false)
 enabled: true
 
-# Kick message on IP mismatch
-kick-message: Доступ запрещён
-
-# Saved entries (automatic, do not edit manually)
-entries: {}
+# Message when kicked for IP mismatch
+kick-message: Access denied
 ```
 
 | Parameter | Description |
-|-----------|-------------|
-| `enabled` | Global toggle for IP checking. `false` — everyone can join from any IP |
-| `kick-message` | Message shown to the player when kicked |
-| `entries` | Automatic binding list. Managed via commands |
+|----------|----------|
+| `enabled` | Global IP check toggle. `false` — everyone can log in from any IP |
+| `kick-message` | Message the player will see when kicked |
 
 ---
 
 ## Commands
 
 | Subcommand | Arguments | Description |
-|------------|-----------|-------------|
-| `/aoli add <nick>` | `<nick>` | Save UUID + IP of the current player |
-| `/aoli delete <nick>` | `<nick>` | Remove entry by nickname |
+|------------|-----------|----------|
+| `/aoli add <nick>` | `<nick>` | Save the current player's UUID + IP |
+| `/aoli delete <nick>` | `<nick>` | Delete an entry by nickname |
 | `/aoli on` | | Enable IP checking |
 | `/aoli off` | | Disable IP checking |
 | `/aoli reload` | | Reload config.yml |
@@ -84,29 +78,20 @@ entries: {}
 
 ---
 
-## How it works
-
-1. A player runs `/aoli add <nickname>` — the plugin saves their UUID, nickname, and current IP to `data.yml`
-2. On every login, the plugin checks: if the player's UUID exists in the database, their IP must match the stored one
-3. If the IP doesn't match — the player is kicked
-4. You can disable the check with `/aoli off` (useful when changing IP)
-
----
-
 ## Permissions
 
 | Permission | Description | Default |
-|------------|-------------|---------|
-| `adminonlyloginip.admin` | Manage entries and settings | `op` |
+|-------|------------|--------------|
+| `adminonlyloginip.admin` | Manage Logins and Settings | `op` |
 
 ---
 
 ## Files
 
 | File | Description |
-|------|-------------|
-| `plugins/AdminOnlyLoginIP/config.yml` | Plugin configuration |
-| `plugins/AdminOnlyLoginIP/data.yml` | Entry storage (automatic) |
+|------|----------|
+| `plugins/AdminOnlyLoginIP/config.yml` | Plugin Configuration |
+| `plugins/AdminOnlyLoginIP/data.yml` | Login Storage (automatic) |
 | `plugins/AdminOnlyLoginIP/AdminOnlyLoginIP-1.0.jar` | Plugin |
 
 ---
