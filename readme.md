@@ -1,6 +1,6 @@
 # AdminOnlyLoginIP v1.0
 
-> **Язык:** Русский · [English](README.en.md)
+> **Язык:** Русский · [English](readme.en.md)
 
 Minecraft плагин привязки входа к IP-адресу. Привязывает UUID игрока к конкретному IP — при входе с другого IP игрок кикается. Работает с `online-mode: false`.
 
